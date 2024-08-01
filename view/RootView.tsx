@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect } from 'react';
+import { CustomButton } from "../components/CustomButton";
 
 
 const RootView = () => {
@@ -16,6 +17,11 @@ const RootView = () => {
       <Text className="text-3xl">
         aaaaaaa
       </Text>
+      <CustomButton
+        onClick={() => { console.log("Hello World") }}
+        name="Kaito Kitaya"
+        age={26}
+      ></CustomButton>
     </View>
   )
 }
