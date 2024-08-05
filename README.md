@@ -5,7 +5,6 @@ This repository is for people who want to launch `React Native` app with the fol
 - Typescript
 - TailwindCSS
 - Redux
-- Basic boiler plate of hooks
 
 ※ This app is developed by `Expo`. I will explain all of things on the premise
 of using `Expo`.
@@ -43,3 +42,28 @@ This boilerplate have already made configurations, which you can see `tailwind.c
 This configration file has a role to define what files should be rendered by TailwindCSS.
 
 Let you add paths as following exisitng file paths.
+
+Of cource you can apply styles by normal css by using a style attribute.
+
+## Redux
+
+What you have to see is
+
+- `Counter.tsx`: UI component
+
+- `counterSlice.ts`: It contains `action` and `reducer` in slice. Slicer is an expanded notion in React.
+  Basically you write logics down in the slice.
+
+- `store.ts`: `store` is the place to keep global states. When you add the reducer you have to add exported one
+  and configure like the below.
+
+```typescript
+export const store = configureStore({
+  reducer: {
+    counter: counterReducer,
+  },
+});
+```
+
+- `hooks.ts`: When you start to use Redux you have to define something in them.
+  But minimum settings are already done.
