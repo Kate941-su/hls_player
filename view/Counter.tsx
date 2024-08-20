@@ -16,6 +16,7 @@ import {
 import { IconButton } from '../components/IconButton';
 import TextButton from '../components/TextButton';
 import { RootState } from "../app/store";
+import { Icon } from 'react-native-elements';
 
 
 /* Example of custom hook. To be honest you can define a custom hook with logic. */
@@ -50,19 +51,23 @@ const Counter: React.FC = () => {
         <IconButton
           onPress={() => {
             dispatch(decrement())
-          }}
-          size={24}
-          iconName='text-decrease'
-          color='black'>
+          }}>
+          <Icon
+            name='text-decrease'
+            size={24}
+            color='black'
+          ></Icon>
         </IconButton>
         <View className='flex-none w-10'></View>
         <IconButton
           onPress={() => {
             dispatch(increment())
-          }}
-          size={24}
-          iconName='text-increase'
-          color='black'>
+          }}>
+          <Icon
+            name='text-decrease'
+            size={24}
+            color='black'
+          ></Icon>
         </IconButton>
       </View>
 
@@ -108,4 +113,4 @@ const Counter: React.FC = () => {
   )
 }
 
-export { Counter }
+export default Counter

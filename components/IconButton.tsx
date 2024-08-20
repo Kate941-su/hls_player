@@ -1,25 +1,24 @@
-import { View, Text, Pressable } from 'react-native'
+import { View, Text, Pressable, StyleProp, ViewStyle } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import Octicons from 'react-native-vector-icons/Octicons'
 import React from 'react'
 
 type Props = {
-  iconName: string,
-  size?: number,
-  color?: string,
+  style?: StyleProp<ViewStyle> | undefined;
+  children: React.ReactNode;
   onPress: VoidFunction,
 }
 
 
 const IconButton: React.FC<Props> = ({
-  iconName,
-  color = 'black',
-  size = 24,
+  style,
+  children,
   onPress,
 }) => {
   return (
-    <View>
+    <View style={style}>
       <Pressable onPress={() => { onPress() }}>
-        <Icon name={iconName} size={size} color={color}></Icon>
+        {children}
       </Pressable>
     </View>
   )
