@@ -3,6 +3,7 @@ import React from 'react'
 import { IconButton } from './IconButton'
 import Entypo from 'react-native-vector-icons/Entypo'
 
+
 type Props = {
   title: string,
   subTitle: string,
@@ -18,6 +19,7 @@ const ListItem: React.FC<Props> = ({
   onTapTrashButton
 }) => {
   return (
+
     <View style={styles.container}>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
