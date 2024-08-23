@@ -1,5 +1,5 @@
 import ListItem from "./ListItem";
-import CircleButton from "./CircleButton";
+import FloatingActionButton from "./FloatingActionButton";
 import { IconButton } from "./IconButton";
 
-export { ListItem, CircleButton, IconButton }
+export { ListItem, FloatingActionButton, IconButton }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Platform, FlatList, TouchableHighlight, SafeAreaView, StatusBar } from 'react-native'
 import { FlatGrid } from 'react-native-super-grid'
-import { CircleButton, ListItem } from '../components/index'
+import { FloatingActionButton, ListItem } from '../components/index'
 import { Appbar, IconButton } from 'react-native-paper'
 import CustomAppbar from '../components/CustomAppbar'
 import { FloatingAction } from 'react-native-floating-action'
@@ -39,8 +39,10 @@ const MainScreen: React.FC<Props> = ({ navigation, route }) => {
         />
       </View>
 
-      <CircleButton
-        onPressed={() => { }}
+      <FloatingActionButton
+        onPressed={() => {
+          navigation.navigate('RegisterScreen')
+        }}
         size={48}
         icon='plus'
         color='white'

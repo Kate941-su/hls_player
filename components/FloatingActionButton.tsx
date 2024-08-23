@@ -10,10 +10,10 @@ type Props = {
   backgroundColor: string
 }
 
-const CircleButton: React.FC<Props> = ({ onPressed, icon, size, color = '#ffffff', backgroundColor }) => {
+const FloatingActionButton: React.FC<Props> = ({ onPressed, icon, size, color = '#ffffff', backgroundColor }) => {
   return (
     <IconButton
-      onPress={() => { }}
+      onPress={onPressed}
       style={[{
         width: size,
         height: size,
@@ -34,4 +34,4 @@ const CircleButton: React.FC<Props> = ({ onPressed, icon, size, color = '#ffffff
   )
 }
 
-export default CircleButton
+export default FloatingActionButton
