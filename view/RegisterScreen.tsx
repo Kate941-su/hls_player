@@ -7,8 +7,8 @@ import TextButton from '../components/TextButton';
 import { Asset } from 'expo-asset'
 import * as FileSystem from 'expo-file-system';
 import { counterSlice } from '../slicers/counter/counterSlice';
-
-
+import { Parser } from 'm3u8-parser'
+import defaultPlaylist from '../assets/media/default_list';
 
 type Props = NativeStackScreenProps<RootStackparamlist, 'MainScreen'>;
 
@@ -16,20 +16,10 @@ const RegisterScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const [url, onChangeURL] = useState('')
   const [alias, onChangeAlias] = useState('')
-  const [fileContent, setFileContent] = useState('');
+  const [playlistData, setPlaylistData] = useState([]);
 
   useEffect(() => {
-    const path = require('../assets')
-    const fetchData = async () => {
-      // const [{ localUri }] = await Asset.loadAsync(require('../assets/m3u/source.m3u'))
-      // console.log(`fetchData => ${localUri}`)
-      // if (localUri) {
-      //   const content = await FileSystem.readAsStringAsync(localUri)
-      //   console.log(`file content => ${content}`)
-      //   setFileContent(content)
-      // }
-    }
-    fetchData().catch((reason) => { console.log(`Error reason => ${reason}`) })
+    console.log(defaultPlaylist)
   }, [])
 
   return (

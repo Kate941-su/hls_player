@@ -16,7 +16,7 @@
     "expo-asset": "^10.0.10",
     "expo-file-system": "^17.0.1",
     "expo-status-bar": "~1.12.1",
-    "hls-parser": "^0.13.3",
+    "m3u8-parser": "^7.2.0",
     "nativewind": "^2.0.11",
     "react": "18.2.0",
     "react-native": "0.74.3",
