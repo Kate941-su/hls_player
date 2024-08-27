@@ -1,29 +1,45 @@
-import { View, Text, Pressable } from 'react-native'
+import {
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  TextStyle
+} from 'react-native'
 import React from 'react'
 
 
 type Props = {
   onPress: VoidFunction,
-  title: string,
-  textStyle?: string,
-  buttonStyle?: string,
+  name: string,
+  textStyle?: StyleProp<TextStyle>,
+  buttonStyle?: StyleProp<ViewStyle>,
 }
 
 
 const TextButton: React.FC<Props> = ({
-  title,
+  name,
   onPress,
-  textStyle = 'font-bold text-white',
-  buttonStyle = '',
+  textStyle,
+  buttonStyle,
 }) => {
 
   return (
-    <Pressable
-      onPress={() => { onPress() }}
-      className={buttonStyle}>
-      <Text className={textStyle}>{title}</Text>
-    </Pressable>
+    <View>
+      <Pressable
+        onPress={onPress}
+        style={[buttonStyle]}>
+        <Text style={[textStyle]}>{name}</Text>
+      </Pressable>
+    </View>
   )
 }
 
 export default TextButton
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+});

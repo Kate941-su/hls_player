@@ -20,15 +20,15 @@ export default function App() {
           <NavigationContainer>
             <Stack.Navigator>
               <Stack.Screen
-                name="MainScreen"
-                component={MainScreen}
+                name="RegisterScreen"
+                component={RegisterScreen}
                 options={{
                   headerShown: false
                 }}
               />
               <Stack.Screen
-                name="RegisterScreen"
-                component={RegisterScreen}
+                name="MainScreen"
+                component={MainScreen}
                 options={{
                   headerShown: false
                 }}
