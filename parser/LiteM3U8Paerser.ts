@@ -1,73 +1,117 @@
-import TVG_TYPE from "./TVGType";
+import { Manifest, Entry, AttributeTag } from "./types";
+import EXT_TYPE from "./extType";
+export default class LiteM3U8Parser {
+  private emptyManifest = {
+    playlistTitle: "",
+    playlist: [],
+  };
 
-const emptyManifest = {
-  playlistTitle: "",
-  playlist: [],
-};
-
-class LiteM3U8Parser {
   private manifest: Manifest = {
     playlistTitle: "",
     playlist: [],
   };
-  private constructor() {}
+  constructor() {}
 
-  parse = (rawContetnt: String): Manifest => {
-    const rawList = rawContetnt.split("\n");
-
-    const extLine = `
-#EXTM3U
-#PLAYLIST:Online radio: 60S Music (www.radio.pervii.com)
-#EXTINF:-1 tvg-logo="http://radio.pervii.com/im/1/1537513721.jpg" group-title="60S Radio", Beatles Radio - 128 kbit/s
-http://64.40.99.76:8000/stream/1/
-#EXTINF:-1 tvg-logo="http://radio.pervii.com/logo/12108.jpg" group-title="60S Radio", Radio 60 70 80 - Italy - Italia - www.607080.it - 128 kbit/s
-http://www.studiopiu.net:8005
-#EXTINF:-1 tvg-logo="http://radio.pervii.com/logo/1403636185.png" group-title="60S Radio", RadioSuperoldie HIGH - 192 kbit/s
-http://87.118.87.46:8888/stream/1/
-#EXTINF:10.000000,TVG-ID="Channel1" tvg-name="Channel 1" tvg-logo="http://example.com/channel1.png" group-title="Entertainment",Channel 1
-http://87.118.87.46:8888/stream/1/
-`;
-
-    const list = extLine.split("\n");
-
-    // #から始まるEXTのパース
-    const extRegex = /#EXT[^\r\n]*$/gm;
-    const extMatches = list[2].match(extRegex);
-
-    const sample = list[9];
-    console.log(`sample => ${sample}`);
-    const index = sample.lastIndexOf(",");
-    const attribute = sample.substring(0, index).trim();
-    const title = sample.substring(index + 1).trim();
-
-    const regex = /([\w\-\.\_\:\@]+)="([^"]*)"/g;
-    let match: RegExpExecArray | null;
-    while ((match = regex.exec(attribute)) !== null) {
-      const key = match[1];
-      const value = match[2];
-      console.log(`Key: ${key}, Value: ${value}`);
-    }
-
-    return emptyManifest;
+  public parse = (input: string): Manifest => {
+    const object = this.singleLineParse(input);
+    return this.emptyManifest;
   };
 
-  private parseExtension = extension;
+  private parseEXTTag = (input: string): string | undefined => {
+    const extRegex = /#EXT[^\r\n]*(?=[\s\r\n])/;
+    const result = input.match(extRegex);
+    if (result === undefined) {
+      return undefined;
+    }
+    return result![0];
+  };
+
+  public singleLineParse = (input: string): Entry | string | undefined => {
+    // 0th step: prepare all variables
+    const entry: Entry = {
+      duration: 0,
+      contentFile: "",
+    };
+
+    // 1st step: separate title and attribute
+    const [attribute, title] = this.separateLast(",", input);
+    entry.entry_title = title;
+    console.log(`[entry title] 👉 ${entry.entry_title}`);
+
+    // 2nd step: Separate #EXT and other information
+    const extTag = this.separateFirst(" ", attribute)[0];
+    if (extTag is EXT_TYPE) {
+
+    }
+    const duration = this.getDuration(extTag);
+    entry.duration = duration;
+    console.log(`[extTag] 👉 ${extTag}, [duration] 👉 ${entry.duration}`);
+
+    // 3rd step: Parse line to extract attributes
+    const regex = /([\w\-\.\_\:\@]+)="([^"]*)"/g;
+    let match: RegExpExecArray | null;
+    console.log("attributes👇");
+    while ((match = regex.exec(attribute)) !== null) {
+      const key = match[1] as AttributeTag;
+      const value = match[2];
+      console.log(`[extension key] 👉 ${key}, [extension value] 👉 ${value}`);
+      this.buildAttrivuteEntry(key, value, entry);
+    }
+
+    console.log(`===== result entry =====`);
+    console.log(`contentFile 👉 ${entry.contentFile}`);
+    console.log(`duration 👉 ${entry.duration}`);
+    console.log(`duration 👉 ${entry.entry_title}`);
+    console.log(`tvg id 👉 ${entry.tvg_id}`);
+    console.log(`tvg logo 👉 ${entry.tvg_logo}`);
+    console.log(`tvg name 👉 ${entry.tvg_name}`);
+    return "";
+  };
+
+  private separateLast = (char: string, input: string): string[] => {
+    const index = input.lastIndexOf(char);
+    if (index == -1) {
+      return [input];
+    }
+    const firstPart = input.substring(0, index);
+    const secondPart = input.substring(index + 1);
+    return [firstPart, secondPart];
+  };
+
+  private separateFirst = (char: string, input: string): string[] => {
+    const index = input.indexOf(char);
+    if (index == -1) {
+      return [input];
+    }
+    const firstPart = input.substring(0, index);
+    const secondPart = input.substring(index + 1);
+    return [firstPart, secondPart];
+  };
+
+  private buildAttrivuteEntry = (
+    key: AttributeTag,
+    value: string,
+    entry: Entry
+  ) => {
+    switch (key) {
+      case "tvg-logo":
+        entry.tvg_logo = value;
+        break;
+      case "group-title":
+        entry.group_title = value;
+        break;
+      case "tvg-name":
+        entry.tvg_name = value;
+        break;
+      case "TVG-ID":
+        entry.tvg_id = value;
+        break;
+      default:
+        console.error("Unknow Tag!!!");
+    }
+  };
+
+  public getDuration = (input: string): number => {
+    return parseFloat(input.split(":")[1].replace(",", ""));
+  };
 }
-
-type Manifest = {
-  playlistTitle: string;
-  playlist: Entry[];
-};
-
-const test: string = `#EXTINF:-1 tvg-logo="" group-title="90S Radio", Indifun Radio - Best Indian Music - 128 kbit/s
-http://indifun.net:7000/stream/1/`;
-
-type Entry = {
-  duration: number;
-  tvg_id?: TVG_TYPE;
-  tvg_logo?: string;
-  tvg_name?: string;
-  group_title?: string;
-  entry_title?: string;
-  contentFile: string;
-};

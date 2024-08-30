@@ -9,6 +9,7 @@ import * as FileSystem from 'expo-file-system';
 import { counterSlice } from '../slicers/counter/counterSlice';
 import { Parser } from 'm3u8-parser'
 import defaultPlaylist from '../assets/media/default_list';
+import LiteM3U8Parser from '../parser/LiteM3U8Paerser';
 
 type Props = NativeStackScreenProps<RootStackparamlist, 'MainScreen'>;
 
@@ -17,9 +18,10 @@ const RegisterScreen: React.FC<Props> = ({ navigation, route }) => {
   const [url, onChangeURL] = useState('')
   const [alias, onChangeAlias] = useState('')
   const [playlistData, setPlaylistData] = useState([]);
+  const test: string = `#EXTINF:10.000000, TVG-ID="Channel1" tvg-name="Channel India" tvg-logo="http://example.com/channel1.png" group-title="Entertainment",Channel 1`;
+  const liteParser = new LiteM3U8Parser()
 
   useEffect(() => {
-    console.log(defaultPlaylist)
   }, [])
 
   return (
@@ -63,7 +65,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation, route }) => {
             textStyle={styles.textButtonStyle}
             buttonStyle={styles.buttonStyle}
             onPress={() => {
-              console.log('🚢')
+              liteParser.singleLineParse(test)
             }}
           />
         </View>
