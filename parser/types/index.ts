@@ -1,3 +1,4 @@
+import clearEntry from "./Entry";
 
 type Manifest = {
   playlistTitle: string;
@@ -6,7 +7,7 @@ type Manifest = {
 
 type Entry = {
   duration: number;
-  contentFile: string; // URL
+  contentURL: string; // URL
   tvg_id?: string;
   tvg_logo?: string;
   tvg_name?: string;
@@ -17,4 +18,4 @@ type Entry = {
 // TODO: append more tags
 type AttributeTag = "tvg-logo" | "group-title" | "tvg-name" | "TVG-ID";
 
-export {Manifest, Entry, AttributeTag}
+export { Manifest, Entry, AttributeTag, clearEntry };
