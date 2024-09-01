@@ -5,6 +5,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { Appbar } from 'react-native-paper';
 import TextButton from '../components/TextButton';
 import LiteM3U8Parser from '../parser/LiteM3U8Paerser';
+import defaultPlaylist from '../assets/media/default_list';
 
 type Props = NativeStackScreenProps<RootStackparamlist, 'MainScreen'>;
 
@@ -12,13 +13,6 @@ const RegisterScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const [url, onChangeURL] = useState('')
   const [alias, onChangeAlias] = useState('')
-  const [playlistData, setPlaylistData] = useState([]);
-  const test: string = `
-#EXTINF:10.000000, TVG-ID="Channel1" tvg-name="Channel 1" tvg-logo="http://example.com/2" group-title="Entertainment",Channel 1
-http://aaaaaaa/strem
-#EXTINF:-1 tvg-logo="http://radio.pervii.com/im/7/1587723847.jpg" group-title="60S Radio", ATLANTIS UK - 128 kbit/s
-http://stream1.hippynet.co.uk:8061/stream/1/
-  `;
   const liteParser = new LiteM3U8Parser()
 
   useEffect(() => {
@@ -65,19 +59,18 @@ http://stream1.hippynet.co.uk:8061/stream/1/
             textStyle={styles.textButtonStyle}
             buttonStyle={styles.buttonStyle}
             onPress={() => {
-              const manifest = liteParser.parse(test)
+              const manifest = liteParser.parse(defaultPlaylist)
               console.log(`===== [RegisterScreen] manifest log =====`)
-              console.log(`===== Playlist Title: ${manifest.playlistTitle} =====`)
               for (let entry of manifest.playlist) {
                 // Debug showing
-                console.log(`===== Entry title: ${entry.entry_title} =====`);
+                console.log(`===== Entry title: ${entry.entryTitle} =====`);
                 console.log(`content file : ${entry.contentURL}`);
                 console.log(`duration : ${entry.duration}`);
-                console.log(`tvg id : ${entry.tvg_id}`);
-                console.log(`tvg logo : ${entry.tvg_logo}`);
-                console.log(`tvg name : ${entry.tvg_name}`);
-                console.log(`===== End manifest log=====\n\n`);
+                console.log(`tvg id : ${entry.tvgId}`);
+                console.log(`tvg logo : ${entry.tvgLogo}`);
+                console.log(`tvg name : ${entry.tvgName}`);
               }
+              console.log(`===== End manifest log=====\n\n`);
             }}
           />
         </View>

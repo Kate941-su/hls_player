@@ -2,37 +2,29 @@ import {
   Manifest,
   Entry,
   ExtType,
-  clearEntry,
   ExtAttribute,
   extTypeList,
+  clearEntry,
 } from "./index";
-import { buildEntry } from "./types/entry";
 
 export default class LiteM3U8Parser {
   public isDebugPrint = true;
-  private manifest: Manifest = {
-    playlistTitle: "",
-    playlist: [] as Entry[],
-  };
+
   constructor() {}
 
   public parse = (input: string): Manifest => {
-    const object = this.parseInput(input);
-    return object;
+    return this.parseInput(input);
   };
 
-  private parseEXTTag = (input: string): string | undefined => {
-    const extRegex = /#EXT[^\r\n]*(?=[\s\r\n])/;
-    const result = input.match(extRegex);
-    if (result === undefined) {
-      return undefined;
-    }
-    return result![0];
-  };
+  public concatenating = (
+    srcManifest: Manifest,
+    targetManifest: Manifest
+  ) => {};
 
   public parseInput = (input: string): Manifest => {
-    // 0th step: prepare all variables
-    const manifest: Manifest = { playlistTitle: "", playlist: [] as Entry[] };
+    const newManifest: Manifest = {
+      playlist: [] as Entry[],
+    };
     const entry: Entry = {
       duration: 0,
       contentURL: "",
@@ -42,9 +34,9 @@ export default class LiteM3U8Parser {
       // 1st step: separate title and attribute
       const [attribute, title] = this.separateLast(",", line);
       if (title != undefined) {
-        entry.entry_title = title;
+        entry.entryTitle = title;
       }
-      // 2nd step: Separate #EXT and other information
+      // 2nd step: Separate #EXT tags and other information
       const firstBlock = this.separateFirst(" ", attribute)[0];
       const extTag = this.getEXTTag(firstBlock);
       // Separate handling of whether it has a EXT tag or not
@@ -260,13 +252,13 @@ export default class LiteM3U8Parser {
         }
       } else if (this.isValiedURL(firstBlock)) {
         entry.contentURL = firstBlock;
-        manifest.playlist.push({ ...entry });
+        newManifest.playlist.push({ ...entry });
         clearEntry(entry);
       } else {
         console.log(`This key word will be ignored: ${firstBlock}`);
       }
     }
-    return manifest;
+    return newManifest;
   };
 
   private parseEXTINF = (
@@ -312,20 +304,145 @@ export default class LiteM3U8Parser {
     entry: Entry
   ) => {
     switch (key) {
-      case "tvg-logo":
-        entry.tvg_logo = value;
-        break;
-      case "group-title":
-        entry.group_title = value;
-        break;
-      case "tvg-name":
-        entry.tvg_name = value;
-        break;
       case "TVG-ID":
-        entry.tvg_id = value;
+      case "tvg-id":
+        entry.tvgId = value;
         break;
-      default:
-        console.error("Unknow Tag!!!");
+      case "TVG-NAME":
+      case "tvg-name":
+        entry.tvgName = value;
+        break;
+      case "TVG-LOGO":
+      case "tvg-logo":
+        entry.tvgLogo = value;
+        break;
+      case "TVG-COUNTRY":
+      case "tvg-country":
+        break;
+      case "TVG-LANGUAGE":
+      case "tvg-language":
+        break;
+      case "TVG-TYPE":
+      case "tvg-type":
+        break;
+      case "TVG-URL":
+      case "tvg-url":
+        break;
+      case "TVG-GROUP":
+      case "tvg-group":
+        break;
+      case "TVG-EPGID":
+      case "tvg-epgid":
+        break;
+      case "TVG-EPGURL":
+      case "tvg-epgurl":
+        break;
+      case "TVG-EPGSHIFT":
+      case "tvg-epgshift":
+        break;
+      case "TVG-RADIO":
+      case "tvg-radio":
+        break;
+      case "TVG-TIMESHIFT":
+      case "tvg-timeshift":
+        break;
+      case "TVG-ARCHIVE":
+      case "tvg-archive":
+        break;
+      case "TVG-TVGPLAYLIST":
+      case "tvg-tvgplaylist":
+        break;
+      case "TVG-ASPECT-RATIO":
+      case "tvg-aspect-ratio":
+        break;
+      case "TVG-AUDIO-TRACK":
+      case "tvg-audio-track":
+        break;
+      case "TVG-CLOSED-CAPTIONS":
+      case "tvg-closed-captions":
+        break;
+      case "TVG-CLOSED-CAPTIONS-LANGUAGE":
+      case "tvg-closed-captions-language":
+        break;
+      case "TVG-CLOSED-CAPTIONS-TYPE":
+      case "tvg-closed-captions-type":
+        break;
+      case "TVG-CONTENT-TYPE":
+      case "tvg-content-type":
+        break;
+      case "TVG-COPYRIGHT":
+      case "tvg-copyright":
+        break;
+      case "TVG-DURATION":
+      case "tvg-duration":
+        break;
+      case "TVG-EXT-X-DISCONTINUITY":
+      case "tvg-ext-x-discontinuity":
+        break;
+      case "TVG-EXT-X-ENDLIST":
+      case "tvg-ext-x-endlist":
+        break;
+      case "TVG-EXT-X-KEY":
+      case "tvg-ext-x-key":
+        break;
+      case "TVG-EXT-X-MEDIA-SEQUENCE":
+      case "tvg-ext-x-media-sequence":
+        break;
+      case "TVG-EXT-X-PROGRAM-DATE-TIME":
+      case "tvg-ext-x-program-date-time":
+        break;
+      case "TVG-EXT-X-VERSION":
+      case "tvg-ext-x-version":
+        break;
+      case "TVG-GAP":
+      case "tvg-gap":
+        break;
+      case "TVG-INDEPENDENT-SEGMENTS":
+      case "tvg-independent-segments":
+        break;
+      case "TVG-MEDIA":
+      case "tvg-media":
+        break;
+      case "TVG-MEDIA-SEQUENCE":
+      case "tvg-media-sequence":
+        break;
+      case "TVG-PLAYLIST-TYPE":
+      case "tvg-playlist-type":
+        break;
+      case "TVG-START":
+      case "tvg-start":
+        break;
+      case "TVG-TARGETDURATION":
+      case "tvg-targetduration":
+        break;
+      case "TVG-X-BYTERANGE":
+      case "tvg-x-byterange":
+        break;
+      case "TVG-X-ENDLIST":
+      case "tvg-x-endlist":
+        break;
+      case "TVG-X-KEY":
+      case "tvg-x-key":
+        break;
+      case "TVG-X-MEDIA-SEQUENCE":
+      case "tvg-x-media-sequence":
+        break;
+      case "TVG-X-PROGRAM-DATE-TIME":
+      case "tvg-x-program-date-time":
+        break;
+      case "TVG-X-VERSION":
+      case "tvg-x-version":
+        break;
+      case "TVG-RESOLUTION":
+      case "tvg-resolution":
+        break;
+      case "TVG-FRAMERATE":
+      case "tvg-framerate":
+        break;
+      case "GROUP-TITLE":
+      case "group-title":
+        entry.groupTitle = value;
+        break;
     }
   };
 
@@ -338,7 +455,11 @@ export default class LiteM3U8Parser {
   };
 
   private getDuration = (input: string): number => {
-    return parseFloat(input.split(":")[1].replace(",", ""));
+    const duration = parseFloat(input.split(":")[1].replace(",", ""));
+    if (duration < 0) {
+      return Number.MAX_VALUE;
+    }
+    return duration;
   };
 
   private isValiedURL = (url: string): boolean => {
@@ -348,5 +469,14 @@ export default class LiteM3U8Parser {
     } catch {
       return false;
     }
+  };
+
+  private parseEXTTag = (input: string): string | undefined => {
+    const extRegex = /#EXT[^\r\n]*(?=[\s\r\n])/;
+    const result = input.match(extRegex);
+    if (result === undefined) {
+      return undefined;
+    }
+    return result![0];
   };
 }

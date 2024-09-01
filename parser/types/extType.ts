@@ -1,3 +1,4 @@
+/* EXT Tags */
 type ExtType =
   | "#EXTM3U"
   | "#EXTINF"
@@ -141,7 +142,160 @@ const extTypeList = [
   "#EXT-X-CUE-OUT-CONT-DURATION-MS",
 ];
 
-// TODO: append more tags
-type ExtAttribute = "tvg-logo" | "group-title" | "tvg-name" | "TVG-ID";
+/* Ext Attributes */
+type TvgId = "TVG-ID" | "tvg-id";
+type TvgName = "TVG-NAME" | "tvg-name";
+type TvgLogo = "TVG-LOGO" | "tvg-logo";
+type TvgCountry = "TVG-COUNTRY" | "tvg-country";
+type TvgLanguage = "TVG-LANGUAGE" | "tvg-language";
+type TvgType = "TVG-TYPE" | "tvg-type";
+type TvgUrl = "TVG-URL" | "tvg-url";
+type TvgGroup = "TVG-GROUP" | "tvg-group";
+type TvgEpgid = "TVG-EPGID" | "tvg-epgid";
+type TvgEpgUrl = "TVG-EPGURL" | "tvg-epgurl";
+type TvgEpgShift = "TVG-EPGSHIFT" | "tvg-epgshift";
+type TvgRadio = "TVG-RADIO" | "tvg-radio";
+type TvgTimeshift = "TVG-TIMESHIFT" | "tvg-timeshift";
+type TvgArchive = "TVG-ARCHIVE" | "tvg-archive";
+type TvgTvgPlaylist = "TVG-TVGPLAYLIST" | "tvg-tvgplaylist";
+type TvgAspectRatio = "TVG-ASPECT-RATIO" | "tvg-aspect-ratio";
+type TvgAudioTrack = "TVG-AUDIO-TRACK" | "tvg-audio-track";
+type TvgClosedCaptions = "TVG-CLOSED-CAPTIONS" | "tvg-closed-captions";
+type TvgClosedCaptionsLanguage =
+  | "TVG-CLOSED-CAPTIONS-LANGUAGE"
+  | "tvg-closed-captions-language";
+type TvgClosedCaptionsType =
+  | "TVG-CLOSED-CAPTIONS-TYPE"
+  | "tvg-closed-captions-type";
+type TvgContentType = "TVG-CONTENT-TYPE" | "tvg-content-type";
+type TvgCopyright = "TVG-COPYRIGHT" | "tvg-copyright";
+type TvgDuration = "TVG-DURATION" | "tvg-duration";
+type TvgExtXDiscontinuity =
+  | "TVG-EXT-X-DISCONTINUITY"
+  | "tvg-ext-x-discontinuity";
+type TvgExtXEndlist = "TVG-EXT-X-ENDLIST" | "tvg-ext-x-endlist";
+type TvgExtXKey = "TVG-EXT-X-KEY" | "tvg-ext-x-key";
+type TvgExtXMediaSequence =
+  | "TVG-EXT-X-MEDIA-SEQUENCE"
+  | "tvg-ext-x-media-sequence";
+type TvgExtXProgramDateTime =
+  | "TVG-EXT-X-PROGRAM-DATE-TIME"
+  | "tvg-ext-x-program-date-time";
+type TvgExtXVersion = "TVG-EXT-X-VERSION" | "tvg-ext-x-version";
+type TvgGap = "TVG-GAP" | "tvg-gap";
+type TvgIndependentSegments =
+  | "TVG-INDEPENDENT-SEGMENTS"
+  | "tvg-independent-segments";
+type TvgMedia = "TVG-MEDIA" | "tvg-media";
+type TvgMediaSequence = "TVG-MEDIA-SEQUENCE" | "tvg-media-sequence";
+type TvgPlaylistType = "TVG-PLAYLIST-TYPE" | "tvg-playlist-type";
+type TvgStart = "TVG-START" | "tvg-start";
+type TvgTargetDuration = "TVG-TARGETDURATION" | "tvg-targetduration";
+type TvgXByterange = "TVG-X-BYTERANGE" | "tvg-x-byterange";
+type TvgXEndlist = "TVG-X-ENDLIST" | "tvg-x-endlist";
+type TvgXKey = "TVG-X-KEY" | "tvg-x-key";
+type TvgXMediaSequence = "TVG-X-MEDIA-SEQUENCE" | "tvg-x-media-sequence";
+type TvgXProgramDateTime =
+  | "TVG-X-PROGRAM-DATE-TIME"
+  | "tvg-x-program-date-time";
+type TvgXVersion = "TVG-X-VERSION" | "tvg-x-version";
+type TvgResolution = "TVG-RESOLUTION" | "tvg-resolution";
+type TvgFramerate = "TVG-FRAMERATE" | "tvg-framerate";
+type GroupTitle = "GROUP-TITLE" | "group-title";
 
-export { ExtType, extTypeList, ExtAttribute };
+type ExtAttribute =
+  | TvgId
+  | TvgName
+  | TvgLogo
+  | TvgCountry
+  | TvgLanguage
+  | TvgType
+  | TvgUrl
+  | TvgGroup
+  | TvgEpgid
+  | TvgEpgUrl
+  | TvgEpgShift
+  | TvgRadio
+  | TvgTimeshift
+  | TvgArchive
+  | TvgTvgPlaylist
+  | TvgAspectRatio
+  | TvgAudioTrack
+  | TvgClosedCaptions
+  | TvgClosedCaptionsLanguage
+  | TvgClosedCaptionsType
+  | TvgContentType
+  | TvgCopyright
+  | TvgDuration
+  | TvgExtXDiscontinuity
+  | TvgExtXEndlist
+  | TvgExtXKey
+  | TvgExtXMediaSequence
+  | TvgExtXProgramDateTime
+  | TvgExtXVersion
+  | TvgGap
+  | TvgIndependentSegments
+  | TvgMedia
+  | TvgMediaSequence
+  | TvgPlaylistType
+  | TvgStart
+  | TvgTargetDuration
+  | TvgXByterange
+  | TvgXEndlist
+  | TvgXKey
+  | TvgXMediaSequence
+  | TvgXProgramDateTime
+  | TvgXVersion
+  | TvgResolution
+  | TvgFramerate
+  | GroupTitle;
+
+export {
+  ExtType,
+  extTypeList,
+  ExtAttribute,
+  TvgId,
+  TvgName,
+  TvgLogo,
+  TvgCountry,
+  TvgLanguage,
+  TvgType,
+  TvgUrl,
+  TvgGroup,
+  TvgEpgid,
+  TvgEpgUrl,
+  TvgEpgShift,
+  TvgRadio,
+  TvgTimeshift,
+  TvgArchive,
+  TvgTvgPlaylist,
+  TvgAspectRatio,
+  TvgAudioTrack,
+  TvgClosedCaptions,
+  TvgClosedCaptionsLanguage,
+  TvgClosedCaptionsType,
+  TvgContentType,
+  TvgCopyright,
+  TvgDuration,
+  TvgExtXDiscontinuity,
+  TvgExtXEndlist,
+  TvgExtXKey,
+  TvgExtXMediaSequence,
+  TvgExtXProgramDateTime,
+  TvgExtXVersion,
+  TvgGap,
+  TvgIndependentSegments,
+  TvgMedia,
+  TvgMediaSequence,
+  TvgPlaylistType,
+  TvgStart,
+  TvgTargetDuration,
+  TvgXByterange,
+  TvgXEndlist,
+  TvgXKey,
+  TvgXMediaSequence,
+  TvgXProgramDateTime,
+  TvgXVersion,
+  TvgResolution,
+  TvgFramerate,
+};
