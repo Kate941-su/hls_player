@@ -4,11 +4,6 @@ import { RootStackparamlist } from '../Router'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { Appbar } from 'react-native-paper';
 import TextButton from '../components/TextButton';
-import { Asset } from 'expo-asset'
-import * as FileSystem from 'expo-file-system';
-import { counterSlice } from '../slicers/counter/counterSlice';
-import { Parser } from 'm3u8-parser'
-import defaultPlaylist from '../assets/media/default_list';
 import LiteM3U8Parser from '../parser/LiteM3U8Paerser';
 
 type Props = NativeStackScreenProps<RootStackparamlist, 'MainScreen'>;
@@ -18,7 +13,12 @@ const RegisterScreen: React.FC<Props> = ({ navigation, route }) => {
   const [url, onChangeURL] = useState('')
   const [alias, onChangeAlias] = useState('')
   const [playlistData, setPlaylistData] = useState([]);
-  const test: string = `#EXTINF:10.000000, TVG-ID="Channel1" tvg-name="Channel India" tvg-logo="http://example.com/channel1.png" group-title="Entertainment",Channel 1`;
+  const test: string = `
+#EXTINF:10.000000, TVG-ID="Channel1" tvg-name="Channel 1" tvg-logo="http://example.com/2" group-title="Entertainment",Channel 1
+http://aaaaaaa/strem
+#EXTINF:-1 tvg-logo="http://radio.pervii.com/im/7/1587723847.jpg" group-title="60S Radio", ATLANTIS UK - 128 kbit/s
+http://stream1.hippynet.co.uk:8061/stream/1/
+  `;
   const liteParser = new LiteM3U8Parser()
 
   useEffect(() => {
@@ -65,7 +65,19 @@ const RegisterScreen: React.FC<Props> = ({ navigation, route }) => {
             textStyle={styles.textButtonStyle}
             buttonStyle={styles.buttonStyle}
             onPress={() => {
-              liteParser.singleLineParse(test)
+              const manifest = liteParser.parse(test)
+              console.log(`===== [RegisterScreen] manifest log =====`)
+              console.log(`===== Playlist Title: ${manifest.playlistTitle} =====`)
+              for (let entry of manifest.playlist) {
+                // Debug showing
+                console.log(`===== Entry title: ${entry.entry_title} =====`);
+                console.log(`content file : ${entry.contentURL}`);
+                console.log(`duration : ${entry.duration}`);
+                console.log(`tvg id : ${entry.tvg_id}`);
+                console.log(`tvg logo : ${entry.tvg_logo}`);
+                console.log(`tvg name : ${entry.tvg_name}`);
+                console.log(`===== End manifest log=====\n\n`);
+              }
             }}
           />
         </View>
