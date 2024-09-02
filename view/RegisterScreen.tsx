@@ -7,7 +7,7 @@ import TextButton from '../components/TextButton';
 import LiteM3U8Parser from '../parser/LiteM3U8Paerser';
 import defaultPlaylist from '../assets/media/default_list';
 
-type Props = NativeStackScreenProps<RootStackparamlist, 'MainScreen'>;
+type Props = NativeStackScreenProps<RootStackparamlist, 'RegisterScreen'>;
 
 const RegisterScreen: React.FC<Props> = ({ navigation, route }) => {
 
@@ -60,17 +60,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation, route }) => {
             buttonStyle={styles.buttonStyle}
             onPress={() => {
               const manifest = liteParser.parse(defaultPlaylist)
-              console.log(`===== [RegisterScreen] manifest log =====`)
-              for (let entry of manifest.playlist) {
-                // Debug showing
-                console.log(`===== Entry title: ${entry.entryTitle} =====`);
-                console.log(`content file : ${entry.contentURL}`);
-                console.log(`duration : ${entry.duration}`);
-                console.log(`tvg id : ${entry.tvgId}`);
-                console.log(`tvg logo : ${entry.tvgLogo}`);
-                console.log(`tvg name : ${entry.tvgName}`);
-              }
-              console.log(`===== End manifest log=====\n\n`);
+              liteParser.showAllEntries(manifest)
             }}
           />
         </View>

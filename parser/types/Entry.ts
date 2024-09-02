@@ -1,3 +1,5 @@
+import "react-native-get-random-values";
+
 export type Entry = {
   duration: number;
   contentURL: string; // URL

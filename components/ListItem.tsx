@@ -1,44 +1,51 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import React from 'react'
 import { IconButton } from './IconButton'
-import Entypo from 'react-native-vector-icons/Entypo'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 
 type Props = {
   title: string,
-  subTitle: string,
-  onTapEditButton: VoidFunction,
-  onTapTrashButton: VoidFunction
+  subTitle?: string,
+  imageURI?: string,
+  onTapStarButton: VoidFunction,
+  onPress: VoidFunction,
 }
 
 
 const ListItem: React.FC<Props> = ({
   title,
   subTitle,
-  onTapEditButton,
-  onTapTrashButton
+  imageURI,
+  onTapStarButton,
+  onPress,
 }) => {
   return (
-
-    <View style={styles.container}>
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.subTitle}>{subTitle}</Text>
-      </View>
-      <View style={styles.iconContainer}>
-        <IconButton
-          style={styles.iconButton}
-          onPress={() => { console.log('Edit Tapped') }}>
-          <Entypo name={"pencil"} size={24} />
-        </IconButton>
-
-        <IconButton
-          style={styles.iconButton}
-          onPress={() => { console.log('Trash Tapped') }}>
-          <Entypo name={"trash"} size={24} />
-        </IconButton>
-      </View>
-    </View>
+    <Pressable onPress={() => onPress()}      >
+      <View style={styles.container}>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={(imageURI != undefined || imageURI == "") ? {
+              uri: imageURI,
+            } :
+              require('../assets/images/noimage.png')
+            }
+          />
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.subTitle}>{subTitle != null ? subTitle : ''}</Text>
+        </View>
+        <View style={styles.iconContainer}>
+          <IconButton
+            style={styles.iconButton}
+            onPress={() => { onTapStarButton() }}>
+            <FontAwesome name={"star-o"} size={24} />
+          </IconButton>
+        </View>
+      </View >
+    </Pressable>
   )
 }
 
@@ -48,17 +55,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
+    alignItems: "center",
     flexDirection: 'row',
     borderWidth: 2,
     borderRadius: 8,
     borderColor: 'grey',
     padding: 8,
-    width: '100%'
+    width: '100%',
+    height: 100,
   },
-
+  imageContainer: {
+    width: 75,
+    height: 75,
+    backgroundColor: "#ff00ff",
+    borderRadius: 8,
+  },
+  image: {
+    width: "100%",
+    height: "100%"
+  },
   iconContainer: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
   iconButton: {
@@ -66,11 +84,13 @@ const styles = StyleSheet.create({
   },
 
   textContainer: {
-    flexDirection: 'column'
+    flexDirection: 'column',
+    width: '60%',
+    height: "100%"
   },
 
   title: {
-    fontSize: 24,
+    fontSize: 16,
     fontWeight: 'bold'
   },
   subTitle: {

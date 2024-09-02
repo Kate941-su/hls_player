@@ -8,6 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootStackparamlist } from './Router';
 import RegisterScreen from './view/RegisterScreen';
+import PlayerScreen from './view/PlayerScreen';
 
 const Stack = createNativeStackNavigator<RootStackparamlist>()
 
@@ -20,15 +21,22 @@ export default function App() {
           <NavigationContainer>
             <Stack.Navigator>
               <Stack.Screen
-                name="RegisterScreen"
-                component={RegisterScreen}
+                name="MainScreen"
+                component={MainScreen}
                 options={{
                   headerShown: false
                 }}
               />
               <Stack.Screen
-                name="MainScreen"
-                component={MainScreen}
+                name="PlayerScreen"
+                component={PlayerScreen}
+                options={{
+                  headerShown: false
+                }}
+              />
+              <Stack.Screen
+                name="RegisterScreen"
+                component={RegisterScreen}
                 options={{
                   headerShown: false
                 }}

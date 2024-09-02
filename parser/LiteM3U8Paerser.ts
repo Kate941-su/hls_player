@@ -1,3 +1,4 @@
+import { number } from "zod";
 import {
   Manifest,
   Entry,
@@ -7,21 +8,20 @@ import {
   clearEntry,
 } from "./index";
 
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
+
 export default class LiteM3U8Parser {
   public isDebugPrint = true;
 
   constructor() {}
 
-  public parse = (input: string): Manifest => {
-    return this.parseInput(input);
+  public parseAsync = async (input: string): Promise<Manifest> => {
+    const result = this.parse(input);
+    return result as Manifest;
   };
 
-  public concatenating = (
-    srcManifest: Manifest,
-    targetManifest: Manifest
-  ) => {};
-
-  public parseInput = (input: string): Manifest => {
+  public parse = (input: string): Manifest => {
     const newManifest: Manifest = {
       playlist: [] as Entry[],
     };
@@ -255,11 +255,16 @@ export default class LiteM3U8Parser {
         newManifest.playlist.push({ ...entry });
         clearEntry(entry);
       } else {
-        console.log(`This key word will be ignored: ${firstBlock}`);
+        // console.log(`This key word will be ignored: ${firstBlock}`);
       }
     }
     return newManifest;
   };
+
+  public concatenating = (
+    srcManifest: Manifest,
+    targetManifest: Manifest
+  ) => {};
 
   private parseEXTINF = (
     entry: Entry,
@@ -478,5 +483,29 @@ export default class LiteM3U8Parser {
       return undefined;
     }
     return result![0];
+  };
+
+  // level list
+  // >= 2 : You can see only significant items
+  // 1 : You can see verbose items
+  // 0 : All of entires will be shown
+  showAllEntries = (manifest: Manifest, level: number = 2) => {
+    console.log(`===== [RegisterScreen] manifest log =====`);
+    for (let entry of manifest.playlist) {
+      console.log(`===== Entry title: ${entry.entryTitle} =====`);
+      console.log(`content file : ${entry.contentURL}`);
+      if (level >= 2) {
+        console.log(`duration : ${entry.duration}`);
+        console.log(`tvg id : ${entry.tvgId}`);
+        console.log(`tvg logo : ${entry.tvgLogo}`);
+        console.log(`tvg name : ${entry.tvgName}`);
+      }
+      if (level >= 1) {
+        // TODO: Choose verbose items
+      } else {
+        // TODO: Implementation
+      }
+      console.log("");
+    }
   };
 }
