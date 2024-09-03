@@ -1,5 +1,5 @@
+import React from 'react'
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, StatusBar } from 'react-native';
-import { TailwindProvider } from 'tailwindcss-react-native';
 import { Provider } from 'react-redux'
 import { store } from './app/store'
 import { Counter, MainScreen } from './view/index';
@@ -15,36 +15,34 @@ const Stack = createNativeStackNavigator<RootStackparamlist>()
 export default function App() {
   return (
     <Provider store={store}>
-      <TailwindProvider>
-        <SafeAreaProvider>
-          <StatusBar barStyle="default" />
-          <NavigationContainer>
-            <Stack.Navigator>
-              <Stack.Screen
-                name="MainScreen"
-                component={MainScreen}
-                options={{
-                  headerShown: false
-                }}
-              />
-              <Stack.Screen
-                name="PlayerScreen"
-                component={PlayerScreen}
-                options={{
-                  headerShown: false
-                }}
-              />
-              <Stack.Screen
-                name="RegisterScreen"
-                component={RegisterScreen}
-                options={{
-                  headerShown: false
-                }}
-              />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </SafeAreaProvider>
-      </TailwindProvider>
+      <SafeAreaProvider>
+        <StatusBar barStyle="default" />
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="MainScreen"
+              component={MainScreen}
+              options={{
+                headerShown: false
+              }}
+            />
+            <Stack.Screen
+              name="PlayerScreen"
+              component={PlayerScreen}
+              options={{
+                headerShown: false
+              }}
+            />
+            <Stack.Screen
+              name="RegisterScreen"
+              component={RegisterScreen}
+              options={{
+                headerShown: false
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
     </Provider>
   );
 }

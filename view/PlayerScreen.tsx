@@ -1,16 +1,53 @@
 import { Image, ImageComponent, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { RootStackparamlist } from '../Router'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Appbar } from 'react-native-paper';
+import { ActivityIndicator, Appbar } from 'react-native-paper';
 import { IconButton } from '../components';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import TrackPlayer from 'react-native-track-player';
 
 type Props = NativeStackScreenProps<RootStackparamlist, 'PlayerScreen'>;
 
 const PlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const { sumbnailURL, sourceURL, title, subtitle } = route.params
+
+  const [isInitializing, setIsInitializing] = useState<boolean>(true);
+
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+
+  const play = async () => {
+    await TrackPlayer.play()
+    setIsPlaying(true)
+  }
+
+  const pause = async () => {
+    await TrackPlayer.pause()
+    setIsPlaying(false)
+  }
+
+  useEffect(() => {
+    const initialize = async () => {
+      await TrackPlayer.add({
+        url: sourceURL,
+        title: title,
+        // TODO: 
+        artist: '',
+        artwork: sumbnailURL
+      });
+    }
+    initialize().then(() => {
+      setIsInitializing(false)
+      TrackPlayer.play()
+      return
+    }).catch((e) => {
+      setIsInitializing(false)
+      console.log(`[PlayerScreen] Failed to play TrackPlayer because: ${e}`)
+    })
+  }, [])
+
+
   return (
     <View style={styles.container}>
       <Appbar.Header style={styles.appbar}>
@@ -49,10 +86,17 @@ const PlayerScreen: React.FC<Props> = ({ navigation, route }) => {
             <FontAwesome name={"star-o"} size={32} />
           </IconButton>
           <View style={{ padding: 32 }} ></View>
-          <IconButton
-            onPress={() => { }}>
-            <FontAwesome name={"play"} size={32} />
-          </IconButton>
+          {
+            isInitializing ? <IconButton
+              onPress={async () => {
+                isPlaying ? await pause() : await play()
+              }}>
+              <FontAwesome name={isPlaying ? "play" : "pause"} size={32} />
+            </IconButton> :
+              <View>
+                <ActivityIndicator />
+              </View>
+          }
           <View style={{ padding: 32 }} ></View>
           <IconButton
             onPress={() => { }}>
